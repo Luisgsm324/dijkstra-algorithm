@@ -4,4 +4,4 @@ class Vertice:
     self.station = station
     self.pointers = {}
     self.start_distance = float('inf')
-  
+    self.predecessor = None

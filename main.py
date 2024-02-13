@@ -18,7 +18,7 @@ for i in graph.nodes['N17'].pointers.values():
   #print(i['target'].station, i['distance'])
 
 for element in graph.nodes:
-  print(element)
+  #print(element)
   #print(graph.nodes[element].pointers)
   for i in graph.nodes[element].pointers.values():
     #print(f"Nome: {i['target'].name} ({i['target'].station}) Distância: {i['distance']}")
@@ -41,23 +41,45 @@ def know_distance(start_vertice, final_vertice):
       distance = i['distance']
   return distance
 
-def search_nodes(node):
+def search_nodes(node, marked_nodes):
   for adjacent_nodes in graph.nodes[node].pointers.values():
     if adjacent_nodes['target'].start_distance > graph.nodes[node].start_distance:
       adjacent_nodes['target'].start_distance = graph.nodes[node].start_distance + adjacent_nodes['distance']
-      print(adjacent_nodes['target'].start_distance)
+      adjacent_nodes['target'].predecessor = graph.nodes[node].station
+      print(graph.nodes[adjacent_nodes['target'].station].station, graph.nodes[adjacent_nodes['target'].station].start_distance)
+      marked_nodes.append(graph.nodes[adjacent_nodes['target'].station])
 
 
 def dijkstra_algorithm(start_vertice, final_vertice):
   unvisited_node = []
+  marked_nodes = []
   # fazer a lista dos não visitados
   for node in graph.nodes:
     unvisited_node.append(graph.nodes[node])
+  minimum_node = None
   graph.nodes[start_vertice].start_distance = 0
-  search_nodes(start_vertice)
-  
+  while graph.nodes[final_vertice] in unvisited_node:
+    print(len(marked_nodes))
+    unvisited_node.remove(graph.nodes[start_vertice])
+    search_nodes(start_vertice, marked_nodes)
+    minimum_node = min(marked_nodes, key=lambda x:x.start_distance)
+    start_vertice = minimum_node.station
+    marked_nodes.remove(graph.nodes[start_vertice])
+    print(start_vertice)
 
-dijkstra_algorithm('N17', 'N18')
+final_graph = 'I09'
+
+dijkstra_algorithm('N10', final_graph)
+print(graph.nodes[final_graph].start_distance)
+
+
+
+while final_graph is not None:
+  print(graph.nodes[final_graph].predecessor, end=" ")
+  final_graph = graph.nodes[final_graph].predecessor
+
+
+
 
 print(f"Total: {count}")
 print(f"Total: {count2}")
