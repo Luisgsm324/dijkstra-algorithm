@@ -13,9 +13,6 @@ count = 0
 count2 = 0
 
 print("Início :)")
-for i in graph.nodes['N17'].pointers.values():
-  pass 
-  #print(i['target'].station, i['distance'])
 
 for element in graph.nodes:
   #print(element)
@@ -56,20 +53,22 @@ def dijkstra_algorithm(start_vertice, final_vertice):
   # fazer a lista dos não visitados
   for node in graph.nodes:
     unvisited_node.append(graph.nodes[node])
+  
   minimum_node = None
   graph.nodes[start_vertice].start_distance = 0
+  
   while graph.nodes[final_vertice] in unvisited_node:
-    print(len(marked_nodes))
     unvisited_node.remove(graph.nodes[start_vertice])
     search_nodes(start_vertice, marked_nodes)
+    
     minimum_node = min(marked_nodes, key=lambda x:x.start_distance)
     start_vertice = minimum_node.station
     marked_nodes.remove(graph.nodes[start_vertice])
     print(start_vertice)
 
-final_graph = 'I09'
+final_graph = 'T08'
 
-dijkstra_algorithm('N10', final_graph)
+dijkstra_algorithm('N11', final_graph)
 print(graph.nodes[final_graph].start_distance)
 
 
@@ -77,8 +76,6 @@ print(graph.nodes[final_graph].start_distance)
 while final_graph is not None:
   print(graph.nodes[final_graph].predecessor, end=" ")
   final_graph = graph.nodes[final_graph].predecessor
-
-
 
 
 print(f"Total: {count}")
