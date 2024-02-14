@@ -40,12 +40,12 @@ def know_distance(start_vertice, final_vertice):
 
 def search_nodes(node, marked_nodes):
   for adjacent_nodes in graph.nodes[node].pointers.values():
-    if adjacent_nodes['target'].start_distance > graph.nodes[node].start_distance:
+    if adjacent_nodes['target'].start_distance > graph.nodes[node].start_distance + adjacent_nodes['distance']:
       adjacent_nodes['target'].start_distance = graph.nodes[node].start_distance + adjacent_nodes['distance']
       adjacent_nodes['target'].predecessor = graph.nodes[node].station
       print(graph.nodes[adjacent_nodes['target'].station].station, graph.nodes[adjacent_nodes['target'].station].start_distance)
       marked_nodes.append(graph.nodes[adjacent_nodes['target'].station])
-
+  
 
 def dijkstra_algorithm(start_vertice, final_vertice):
   unvisited_node = []
@@ -58,19 +58,20 @@ def dijkstra_algorithm(start_vertice, final_vertice):
   graph.nodes[start_vertice].start_distance = 0
   
   while graph.nodes[final_vertice] in unvisited_node:
-    unvisited_node.remove(graph.nodes[start_vertice])
-    search_nodes(start_vertice, marked_nodes)
-    
+    if graph.nodes[start_vertice] in unvisited_node:
+      unvisited_node.remove(graph.nodes[start_vertice])
+      search_nodes(start_vertice, marked_nodes)
+    else:
+      marked_nodes.remove(graph.nodes[start_vertice])
+      
     minimum_node = min(marked_nodes, key=lambda x:x.start_distance)
     start_vertice = minimum_node.station
-    marked_nodes.remove(graph.nodes[start_vertice])
     print(start_vertice)
 
-final_graph = 'T08'
+final_graph = 'S21'
 
-dijkstra_algorithm('N11', final_graph)
+dijkstra_algorithm('A01', final_graph)
 print(graph.nodes[final_graph].start_distance)
-
 
 
 while final_graph is not None:
