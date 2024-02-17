@@ -1,9 +1,6 @@
 from classes.Graph import Graph
-from take_data import take_stations, take_station
-#from dijkstra import dijkstra_algorithm
-
-#from visualization import show_graph
 from gui import Screen
+from take_data import take_stations, take_station
 
 stations = take_stations()
 
@@ -15,7 +12,3 @@ for key_station in stations:
 
 screen = Screen(graph)
 screen.run()
-#show_graph(graph.nodes)
-#dijkstra_algorithm("A13", "A01", graph)
-
-

@@ -22,5 +22,5 @@ class Graph:
       
       if not is_in_graph:
         self.add_vertice(target_id, take_station(target_id)["connections"])
-      
-      node.pointers[station] = { "target": initial_node, "distance": connection["distance"]}
+        
+      node.pointers[station] = { "target": initial_node, "distance": connection["distance"], "type": connection["type"]}

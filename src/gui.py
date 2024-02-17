@@ -52,14 +52,14 @@ class Screen:
     def run_final_frame(self):
         final_list = ["Início"]
         if self.result != None:
-            self.result.pop()
+            keys = list(self.result.keys())
             count = 0
-            for index in range(len(self.result)):
+            for index in range(len(keys)):
                 count += 1
                 if index == 0:
-                    final_list.append(self.result[index-1])
+                    final_list.append(keys[index-1])
                 else:
-                    final_list.append(self.result[-index-1])
+                    final_list.append(keys[-index-1])
                 if count == 5:
                     final_list.append("\n")
                     count = 0
@@ -70,6 +70,7 @@ class Screen:
 
             back_button = Button(self.final_frame, text='Voltar', bd=4, font=('Arial', 12), width=15, command=self.change_to_menuf)
             back_button.place(x=10,y=680)
+        show_graph(self.result)
 
     
     def run_graph_visualizer(self):
@@ -85,6 +86,7 @@ class Screen:
         self.final_station_var.set("")
         self.change_frame(self.start_frame, self.final_frame)
         self.run_final_frame()
+        
 
         
     def run_start_frame(self):
