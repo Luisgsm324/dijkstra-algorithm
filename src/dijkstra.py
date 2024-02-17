@@ -35,5 +35,6 @@ def dijkstra_algorithm(start_vertice, final_vertice, graph):
   while final_vertice is not None:
     path.append(final_vertice)
     final_vertice = graph.nodes[final_vertice].predecessor
-    
-  print(path)
+
+  # Em vez de print(path), coloquei para retornar  
+  return path
