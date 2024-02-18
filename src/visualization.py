@@ -3,9 +3,8 @@ import matplotlib.pyplot as plt
 from classes.Vertice import Vertice
 
 seed = 20532
-G = nx.Graph(seed=seed)
 
-def show_all_graph(key, node, marked):
+def show_all_graph(G, key, node, marked):
   pointers = node.pointers
   for pointer_key in pointers.keys():
     if pointer_key not in marked:
@@ -16,7 +15,7 @@ def show_all_graph(key, node, marked):
     G.add_edge(key, pointer_key, label = distance)
   return marked
 
-def show_path(nodes, marked, node, i, key):
+def show_path(G, nodes, marked, node, i, key):
   if i < len(nodes.keys()) - 1:
     pointer_key = list(nodes.keys())[i+1]
     
@@ -27,7 +26,7 @@ def show_path(nodes, marked, node, i, key):
     G.add_edge(key, pointer_key, label = distance)
   return marked
 
-def config_graph(nx):
+def config_graph(nx, G):
   pos = nx.spring_layout(G, seed=seed) 
   edge_labels = nx.get_edge_attributes(G, 'label')
   
@@ -42,6 +41,7 @@ def config_graph(nx):
   plt.show()
 
 def show_graph(nodes):
+  G = nx.Graph(seed=seed)
   marked = []
   
   for i, key in enumerate(nodes.keys()):
@@ -51,7 +51,7 @@ def show_graph(nodes):
       G.add_node(key)
       marked.append(key)
     
-    if isinstance(node, Vertice): marked = show_all_graph(key, node, marked)
-    else: marked = show_path(nodes, marked, node, i, key)
+    if isinstance(node, Vertice): marked = show_all_graph(G, key, node, marked)
+    else: marked = show_path(G, nodes, marked, node, i, key)
 
-  config_graph(nx)
+  config_graph(nx, G)
