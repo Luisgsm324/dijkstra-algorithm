@@ -25,6 +25,7 @@ def show_path(nodes, marked, node, i, key):
     
     distance = f"{node['type']} {node['distance']}" 
     G.add_edge(key, pointer_key, label = distance)
+  return marked
 
 def config_graph(nx):
   pos = nx.spring_layout(G, seed=seed) 
